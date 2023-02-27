@@ -37,7 +37,6 @@ class UserProvider {
       preferences.token = decodeData['data']['token'].toString();
       preferences.nombres = decodeData['data']['username'];
 
-      //TODO: ESPERAR PARA VER COMO LLEGA EL ENDPOINT DE LOGIN-MOVIL
       preferences.idUsuario = decodeData['data']['id'].toString();
       preferences.idEstudiante = decodeData['data']['grupos'][0]['id'].toString();
       print(preferences.idEstudiante);
@@ -57,7 +56,6 @@ class UserProvider {
   Future<Map<String, dynamic>> getUserById(String id) async {
     print(id);
     print(preferences.token);
-    //TODO: CAMBIAR POR EL ID DEL USUARIO QUE VIENDE DEL LOGIN
     final url = '$_url/auth/users/${id.toString()}';
     final resp = await http.get(
       Uri.parse(url),
