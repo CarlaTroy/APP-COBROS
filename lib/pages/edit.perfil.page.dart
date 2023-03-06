@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:cobros/config/preferenciasUsuario.dart';
 import 'package:cobros/models/student.model.dart';
 import 'package:cobros/models/update.user.model.dart';
+import 'package:cobros/providers/payment.provider.dart';
 import 'package:cobros/providers/user.provider.dart';
 import 'package:flutter/material.dart';
 
@@ -20,6 +21,7 @@ class _EditPerfilPageState extends State<EditPerfilPage> {
   final scaffoldKey = GlobalKey<ScaffoldState>();
   bool circularProgress = false;
   final userProvider = UserProvider();
+  final paymentEnrollementProvider = PaymentProvider();
   final preferencias = UserPreferences();
    String responseMessageServer = '';
    late bool responseSuccessServer = false;
@@ -31,14 +33,14 @@ class _EditPerfilPageState extends State<EditPerfilPage> {
 
 
   getUserById(){
-  userProvider.getUserById(preferencias.idUsuario).then((usuario){
+  paymentEnrollementProvider.getStudentsEnrrollement().then((usuario){
   setState(() {
     print('jajaj ${usuario}');
-    student.username = usuario['username'];
-    student.email = usuario['email'];
-    student.is_staff = usuario['is_staff'];
-    student.is_active = usuario['is_active'];
-    student.group = usuario['groups'][0]['name'].toString();
+    student.username = usuario['user']['username'];
+    student.email = usuario['user']['email'];
+    student.is_staff = usuario['user']['is_staff'];
+    student.is_active = usuario['user']['is_active'];
+    student.group = usuario['user']['groups'][0]['name'].toString();
     print(student.username);
     print(student.email);
     print(student.is_staff);
@@ -103,7 +105,7 @@ class _EditPerfilPageState extends State<EditPerfilPage> {
             ),
             children: [
               FutureBuilder(
-                future: userProvider.getStudentById(preferencias.idEstudiante),
+                future: paymentEnrollementProvider.getStudentsEnrrollement(),
                 builder: (BuildContext context,
                     AsyncSnapshot<Map<String, dynamic>> snapshot) {
                   if (snapshot.hasError) {

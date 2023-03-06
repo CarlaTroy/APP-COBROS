@@ -35,7 +35,27 @@ class PaymentProvider {
     return parsed.map<PaymentEnrollementModel>((json) => PaymentEnrollementModel.fromJson(json)).toList();
   }
 
+  Future<Map<String, dynamic>> getStudentsEnrrollement() async {
+    
+    print(preferenciaToken.token);
+    final url = '$_url//api/students-enrrollement-id/${preferenciaToken.idEstudiante}';
+    final resp = await http.get(
+      Uri.parse(url),
+      headers: {
+    'Content-Type': 'application/json',
+    //'Authorization': 'Token ${preferences.token}'
+    },    
+    );
+//print(resp.body);
+    if (resp.statusCode == 200) {
+      final body = json.decode(resp.body)['data'][0]['student'];
 
+      return body;
+    } else {
+      final body = json.decode(resp.body)['data'][0]['student'];
+      return body;
+    }
+  }
  
 
 }

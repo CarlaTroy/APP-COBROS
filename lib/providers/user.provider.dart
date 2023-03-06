@@ -53,52 +53,6 @@ class UserProvider {
   }
 
 
-  Future<Map<String, dynamic>> getUserById(String id) async {
-    print(id);
-    print(preferences.token);
-    final url = '$_url/auth/users/${id.toString()}';
-    final resp = await http.get(
-      Uri.parse(url),
-      headers: {
-    'Content-Type': 'application/json',
-    //'Authorization': 'Token ${preferences.token}'
-    },    
-    );
-//print(resp.body);
-    if (resp.statusCode == 200) {
-      final body = json.decode(resp.body)['data'];
-
-      return body;
-    } else {
-      final body = json.decode(resp.body)['data'];
-      return body;
-    }
-  }
-
-    Future<Map<String, dynamic>> getStudentById(String id) async {
-    print(id);
-    print(preferences.token);
-    //TODO: CAMBIAR POR EL ID DEL ESTUDIANTE QUE VIENDE DEL LOGIN
-    final url = '$_url/api/students/${id.toString()}';
-    final resp = await http.get(
-      Uri.parse(url),
-      headers: {
-    'Content-Type': 'application/json',
-    //'Authorization': 'Token ${preferences.token}'
-    },    
-    );
-//print(resp.body);
-    if (resp.statusCode == 200) {
-      final body = json.decode(resp.body)['data'];
-
-      return body;
-    } else {
-      final body = json.decode(resp.body)['data'];
-      return body;
-    }
-  }
-
-
     Future<Map<String, dynamic>> editPerfil(UserModel usuario) async {
       print(preferences.token.replaceAll('[', '').replaceAll(']', ''));
        Map<String, String> requestHeaders = {
